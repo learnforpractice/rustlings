@@ -23,11 +23,27 @@ struct Person {
 impl FromStr for Person {
     type Err = String;
     fn from_str(s: &str) -> Result<Person, Self::Err> {
+        let person: Vec<&str> = s.split(',').collect();
+        if person.len() != 2 {
+            return Err(String::from("parse error!"));
+        }
+        let name = person[0].parse::<String>();
+        let age = person[1].parse::<usize>();
+        if name.is_err() || age.is_err() {
+            return Err(String::from("parse error!"));
+        }
+        let name = name.unwrap();
+        let age = age.unwrap();
+        if name.len() == 0 || age == 0 {
+            return Err(String::from("parse error!"));
+        }
+        return Ok(Person{name: name, age: age});
     }
 }
 
 fn main() {
     let p = "Mark,20".parse::<Person>().unwrap();
+    Person::from_str("Mark,20");
     println!("{:?}", p);
 }
 

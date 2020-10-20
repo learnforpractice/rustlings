@@ -7,6 +7,15 @@
 
 // I AM NOT DONE
 
+macro_rules! my_macro {
+    () => {
+        String::from("Hello ");
+    };
+    ($val:expr) => {
+        String::from("Hello ") + $val;
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
